@@ -7,4 +7,10 @@ Alternatively, you can enter ALL GAMES as your input to get a full breakdown of 
 
 Some example of the program being used are locateed in the images below
 
-![Screenshot]
+![Screenshot]Images/image1.png
+
+
+![Screenshot]Images/image2.png
+
+
+![Screenshot]Images/image3.png
