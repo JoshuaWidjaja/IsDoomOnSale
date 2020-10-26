@@ -13,6 +13,9 @@ GAME_STORES_URL = 'https://www.cheapshark.com/api/1.0/stores'
 TEST_URL = 'https://www.cheapshark.com/api/1.0/deals?sortBy=Price'
 
 def main():
+    print('Special thanks to CheapShark for allowing the use of their API for this project')
+    print('\n')
+    
     gameJsonResults = GetURLInfo(DEAL_URL)
     storeJsonResults = GetURLInfo(GAME_STORES_URL)
     resultList = list()
