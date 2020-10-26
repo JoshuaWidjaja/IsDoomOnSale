@@ -4,7 +4,7 @@ import urllib.request
 import difflib
 
 DEAL_URL = 'https://www.cheapshark.com/api/1.0/deals'
-SPECIFIC_DEAL_URL = 'https://www.cheapshark.com/api/1.0/deals?id'
+SPECIFIC_DEAL_URL = 'https://www.cheapshark.com/api/1.0/deals?title='
 GAME_LIST_URL = 'https://www.cheapshark.com/api/1.0/games'
 GAME_LOOKUP_URL = 'https://www.cheapshark.com/api/1.0/games'
 GAME_STORES_URL = 'https://www.cheapshark.com/api/1.0/stores'
@@ -17,6 +17,7 @@ def main():
     print('\n')
     
     gameJsonResults = GetURLInfo(DEAL_URL)
+    
     storeJsonResults = GetURLInfo(GAME_STORES_URL)
     resultList = list()
     storeIdDict = dict()
@@ -26,7 +27,7 @@ def main():
     #print(storeIdDict)
 
     while (True):
-        print('If you\'d like to see all sales going on, type ALL SALES, else')
+        print('If you\'d like to see 60 sales going on, type ALL SALES, else')
         userInput = input('Enter title of game to check sales or Q to quit: ')
         if userInput == 'Q':
             break
@@ -34,14 +35,10 @@ def main():
             resultList = GetAllSales(gameJsonResults, storeIdDict)
         else:
             userInput = userInput.lower()
-            for games in gameJsonResults:
+            specificGameJsonResults = GetURLInfo(SPECIFIC_DEAL_URL + userInput)
+            for games in specificGameJsonResults:
                 if userInput in games['title'].lower():
                     resultList.append([games['title'], games['normalPrice'], games['salePrice'], storeIdDict[games['storeID']]])
-                else:
-                    splitTitle = games['title'].lower().split()              
-                    if difflib.get_close_matches(userInput, splitTitle):
-                        resultList.append([games['title'], games['normalPrice'], games['salePrice'], storeIdDict[games['storeID']]])
-        
         if len(resultList) == 0:
             print("Could not find any sales for your searched game.")
         else:
@@ -75,3 +72,10 @@ def GetAllSales(gameJson, storeDict):
 
 if __name__ == "__main__":
     main()
+
+
+#Can be used somewhere else to find similarity
+    # else:
+    #     splitTitle = games['title'].lower().split()              
+    #     if difflib.get_close_matches(userInput, splitTitle):
+    #         resultList.append([games['title'], games['normalPrice'], games['salePrice'], storeIdDict[games['storeID']]])
