@@ -5,7 +5,7 @@ detect if any games similar to your keyword are on sale on different digital pla
 
 Alternatively, you can enter ALL GAMES as your input to get a full breakdown of every game currently being tracked by the API.
 
-Some example of the program being used are locateed in the images below
+Some example of the program being used are located in the images below
 
 ![Screenshot](Images/image1.png)
 
