@@ -21,6 +21,7 @@ def main():
     storeJsonResults = GetURLInfo(GAME_STORES_URL)
     resultList = list()
     storeIdDict = dict()
+    running = True
     counter = 1
     
     #Creates a dictionary that assigns all stores in the JSON file to be mapped from StoreID:StoreName
@@ -28,11 +29,12 @@ def main():
         storeIdDict[stores['storeID']] = stores['storeName']
     
     #Main loop
-    while (True):
+    while running == True:
         print('If you\'d like to see 60 sales going on, type ALL SALES, else')
         userInput = input('Enter title of game to check sales or Q to quit: ')
         #Quit if user enters 'Q'
         if userInput == 'Q':
+            running = False
             break
         #Finds the cheapest 60 sales found in the general sales JSON data.
         elif userInput == 'ALL SALES':
@@ -40,10 +42,15 @@ def main():
         #Finds games that contained entered word(s) in their title and displays up to 60 sale results based on matches.
         else:
             userInput = userInput.lower()
+            userInput = userInput.replace(" ", "&")
+            
             specificGameJsonResults = GetURLInfo(SPECIFIC_DEAL_URL + userInput)
+            #print(specificGameJsonResults)
             for games in specificGameJsonResults:
-                if userInput in games['title'].lower():
+                adjustUserInput = userInput.replace("&","").upper()
+                if adjustUserInput in games['internalName'].upper():
                     resultList.append([games['title'], games['normalPrice'], games['salePrice'], storeIdDict[games['storeID']]])
+                    
         if len(resultList) == 0:
             print("Could not find any sales for your searched game.")
         #Displays results line by line based on what results were found and added to ResultList.
